@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerAction : MonoBehaviour
 {
-    public float h;
-    public float v;
+    Vector2 inputVec;
     public float speed;
     Rigidbody2D rigid;
     // Start is called before the first frame update
@@ -20,10 +20,11 @@ public class PlayerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
     }
     void FixedUpdate() {
-        rigid.velocity = new Vector2(h,v)*speed;
+        rigid.velocity = inputVec*speed;
+    }
+    void OnMove(InputValue value){
+        inputVec = value.Get<Vector2>();
     }
 }
