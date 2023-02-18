@@ -7,6 +7,7 @@ public class PlayerAction : MonoBehaviour
 {
     private float h;
     private float v;
+    public bool isChange;
     public bool isHorizonMove;
     public float speed;
     public Vector2 inputVec;
@@ -21,7 +22,7 @@ public class PlayerAction : MonoBehaviour
     }
     void Start()
     {
-        
+        curVec = Vector2.zero;
     }
 
     // Update is called once per frame
@@ -30,14 +31,11 @@ public class PlayerAction : MonoBehaviour
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
         HorizonCheck();
+        AnimCheck();
     }
     void FixedUpdate() {
         //십자이동 구현
         inputVec = isHorizonMove?Vector2.right*h:Vector2.up*v;
-        if(curVec != inputVec){
-            AnimCheck();
-        }
-        curVec = inputVec;
         rigid.velocity = inputVec*speed;
     }
     void HorizonCheck(){
