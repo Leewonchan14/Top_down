@@ -11,6 +11,7 @@ public class PlayerAction : MonoBehaviour
     public float speed;
     [Header("#Player_Scanner")]
     public RaycastHit2D front_Hit;
+    public RaycastHit2D Box_Hit;
 
     public Vec vec = new Vec();
     public Scan scan = new Scan();
@@ -30,11 +31,10 @@ public class PlayerAction : MonoBehaviour
     {
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
-        Debug.DrawRay(transform.position,vec.dir, Color.white, 0, true);
         DirCheck();
         AnimCheck();
         if(Input.GetButtonDown("Jump")){
-
+            Debug.Log(scan.Object);
         }
         FrontCheck();
     }
@@ -64,8 +64,19 @@ public class PlayerAction : MonoBehaviour
         compo.anim.SetInteger("VAxisRaw",(int)vec.input.y);
     }
     void FrontCheck(){
-        front_Hit = Physics2D.Raycast(transform.position, vec.dir, 0.5f, scan.Layer);
+        float distance = vec.dir.x==0?0.5f:0.4f;
+        // front_Hit = Physics2D.Raycast(transform.position, vec.dir, distance, scan.Layer);
+        // scan.Object = front_Hit?front_Hit.collider.gameObject:null;
+        front_Hit = Physics2D.BoxCast(transform.position, transform.lossyScale/2, 0,vec.dir,distance, scan.Layer);
         scan.Object = front_Hit?front_Hit.collider.gameObject:null;
+    }
+    void OnDrawGizmos(){
+        Gizmos.color = Color.red;
+        float distance = vec.dir.x==0?0.5f:0.4f;
+        //그릴시작점, 방향*거리
+        // Gizmos.DrawRay(transform.position, Vector3 * 50.0f);
+        //시작점, 사이즈
+        Gizmos.DrawWireCube(transform.position + new Vector3(vec.dir.x,vec.dir.y,0)*distance, transform.lossyScale/2);
     }
 }
 [System.Serializable]
