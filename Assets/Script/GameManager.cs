@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public TalkManager talkManager;
     public static GameManager instance;
 
     public bool isAction;
+    public int talkIndex;
 
     public ui UI = new ui();
     // Start is called before the first frame update
@@ -26,16 +28,29 @@ public class GameManager : MonoBehaviour
         
     }
     public void Action(GameObject scanObject){
-        //대화창이 꺼져있었다면
-        if(isAction == false){
-            UI.ChatText.text = string.Format("This is {0}",scanObject.name);
-        }
-        isAction = !isAction;
+        ObjData objData = scanObject.GetComponent<ObjData>();
+        Talk(objData.id,objData.isNPC);
+
         UI.ChatPanel.SetActive(isAction);
     }
     [System.Serializable]
     public class ui{
         public Text ChatText;
         public GameObject ChatPanel;
+    }
+    void Talk(int id, bool isNPC){
+        string talkStr = talkManager.GetTalk(id,talkIndex);
+        if(talkStr == null) {
+            isAction=false;
+            talkIndex=0;
+            return;
+        }
+        if(isNPC){
+            UI.ChatText.text = talkStr;
+        }else{
+            UI.ChatText.text = talkStr;
+        }
+        isAction = true;
+        talkIndex++;
     }
 }
