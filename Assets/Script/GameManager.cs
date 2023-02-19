@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public TalkManager talkManager;
     public static GameManager instance;
+    public Image portraitImg;
 
     public bool isAction;
     public int talkIndex;
@@ -46,9 +47,12 @@ public class GameManager : MonoBehaviour
             return;
         }
         if(isNPC){
-            UI.ChatText.text = talkStr;
+            UI.ChatText.text = talkStr.Split(':')[0];
+            portraitImg.color = new Color(1,1,1,1);
+            portraitImg.sprite = talkManager.GetSprite(id,int.Parse(talkStr.Split(':')[1]));
         }else{
             UI.ChatText.text = talkStr;
+            portraitImg.color = new Color(1,1,1,0);
         }
         isAction = true;
         talkIndex++;
