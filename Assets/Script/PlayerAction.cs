@@ -29,12 +29,12 @@ public class PlayerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
+        h = GameManager.instance.isAction?0:Input.GetAxisRaw("Horizontal");
+        v = GameManager.instance.isAction?0:Input.GetAxisRaw("Vertical");
         DirCheck();
         AnimCheck();
-        if(Input.GetButtonDown("Jump")){
-            Debug.Log(scan.Object);
+        if(Input.GetButtonDown("Jump")&&scan.Object != null){
+            GameManager.instance.Action(scan.Object);
         }
         FrontCheck();
     }
