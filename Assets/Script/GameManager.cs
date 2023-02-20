@@ -32,13 +32,12 @@ public class GameManager : MonoBehaviour
     public void Action(GameObject scanObject){
         ObjData objData = scanObject.GetComponent<ObjData>();
         Talk(objData.id,objData.isNPC);
-
-        UI.ChatPanel.SetActive(isAction);
+        UI.ChatPanel.SetBool("isShow",isAction);
     }
     [System.Serializable]
     public class ui{
         public Text ChatText;
-        public GameObject ChatPanel;
+        public Animator ChatPanel;
     }
     void Talk(int id, bool isNPC){
         //현재 퀘스트 아이디 가져오기
