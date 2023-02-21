@@ -43,9 +43,20 @@ public class GameManager : MonoBehaviour
     }
     void Talk(int id, bool isNPC){
         //현재 퀘스트 아이디 가져오기
-        int questTalkIndex = questManager.GetQuestTalkIndex(id);
+        int questTalkIndex = 0;
         //퀘스트아이디와 오브젝트아이디를 더한KEY로 대화 가져오기
-        string talkStr = talkManager.GetTalk(id+questTalkIndex,talkIndex);
+        string talkStr = "";
+
+        //애니메이션 중이면 안넘어감
+        if(UI.ChatText.isAnim){
+            UI.ChatText.SetMsg();
+            return;
+        }
+        else{
+            questTalkIndex = questManager.GetQuestTalkIndex(id);
+            talkStr = talkManager.GetTalk(id+questTalkIndex,talkIndex);
+        }
+        
         //대화가 끝났다면 액션 false, 토크인덱스를 0으로 초기화 (처음대화부터...)
         //대사가 끝나면 체크퀘스트로 퀘스트 액션 인덱스를 증가시킨다.
         if(talkStr == null) {
@@ -56,14 +67,13 @@ public class GameManager : MonoBehaviour
         }
         //NPC라면 NPC초상화를 같이 설정
         if(isNPC){
-            UI.ChatText.GetComponent<Typing>().SetMsg(talkStr.Split(':')[0]);
+            UI.ChatText.SetMsg(talkStr.Split(':')[0]);
             portraitImg.color = new Color(1,1,1,1);
             portraitImg.sprite = talkManager.GetSprite(id,int.Parse(talkStr.Split(':')[1]));
             if(preSprite != portraitImg.sprite){
                 UI.Portrait.SetTrigger("isChange");
                 preSprite = portraitImg.sprite;
             }
-            
         } //NPC가 아니라면 ( 사물 )
         else{
             UI.ChatText.SetMsg(talkStr);

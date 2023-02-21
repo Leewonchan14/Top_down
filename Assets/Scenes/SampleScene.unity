@@ -4099,7 +4099,7 @@ MonoBehaviour:
   isAction: 0
   talkIndex: 0
   UI:
-    ChatText: {fileID: 2104656435}
+    ChatText: {fileID: 2104656437}
     ChatPanel: {fileID: 926940484}
     Portrait: {fileID: 1881893493}
 --- !u!4 &1198318423
