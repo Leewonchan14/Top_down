@@ -187,7 +187,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &79131641
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4095,11 +4095,13 @@ MonoBehaviour:
   questManager: {fileID: 76423327}
   talkManager: {fileID: 1964840950}
   portraitImg: {fileID: 1881893492}
+  preSprite: {fileID: 0}
   isAction: 0
   talkIndex: 0
   UI:
     ChatText: {fileID: 2104656435}
     ChatPanel: {fileID: 926940484}
+    Portrait: {fileID: 1881893493}
 --- !u!4 &1198318423
 Transform:
   m_ObjectHideFlags: 0
@@ -7120,6 +7122,7 @@ GameObject:
   - component: {fileID: 1881893490}
   - component: {fileID: 1881893491}
   - component: {fileID: 1881893492}
+  - component: {fileID: 1881893493}
   m_Layer: 5
   m_Name: Portrait
   m_TagString: Untagged
@@ -7185,6 +7188,26 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &1881893493
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881893489}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2db4a63d6bd26644b8b9d31159398691, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &1964840949
 GameObject:
   m_ObjectHideFlags: 0
@@ -7250,6 +7273,7 @@ GameObject:
   - component: {fileID: 2104656433}
   - component: {fileID: 2104656436}
   - component: {fileID: 2104656435}
+  - component: {fileID: 2104656437}
   m_Layer: 5
   m_Name: chatText
   m_TagString: Untagged
@@ -7319,3 +7343,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2104656432}
   m_CullTransparentMesh: 1
+--- !u!114 &2104656437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104656432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095d5a3a48cf4d841992534c8c61eedb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myArrow: {fileID: 79131640}
+  targetMsg: 
+  CharPerSeconds: 0.1
