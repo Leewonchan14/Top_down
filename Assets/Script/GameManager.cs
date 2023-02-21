@@ -6,6 +6,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject player;
     public QuestManager questManager;
     public TalkManager talkManager;
     public static GameManager instance;
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        GameLoad();
         questManager.CheckQuest(UI.questName);
     }
 
@@ -86,6 +88,23 @@ public class GameManager : MonoBehaviour
         }
         isAction = true;
         talkIndex++;
+    }
+    public void GameSave(){
+        PlayerPrefs.SetFloat("PlayerX",player.transform.position.x);
+        PlayerPrefs.SetFloat("PlayerY",player.transform.position.y);
+        PlayerPrefs.SetFloat("QuestId",questManager.questId);
+        PlayerPrefs.SetFloat("QuestActionIndex",questManager.questActionIndex);
+        PlayerPrefs.Save();
+    }
+    public void GameLoad(){
+        if(!PlayerPrefs.HasKey("PlayerX")) return;
+        float x = PlayerPrefs.GetFloat("PlayerX");
+        float y = PlayerPrefs.GetFloat("PlayerY");
+        float id = PlayerPrefs.GetFloat("QuestId");
+        float Index = PlayerPrefs.GetFloat("QuestActionIndex");
+        player.transform.position = new Vector3(x,y,0);
+        questManager.questId = (int)id;
+        questManager.questActionIndex = (int)Index;
     }
     public void ExitGame(){
         Application.Quit();
