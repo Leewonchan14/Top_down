@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class QuestManager : MonoBehaviour
 {
@@ -14,7 +16,6 @@ public class QuestManager : MonoBehaviour
     }
     void Start()
     {
-        CheckQuest();
     }
 
     // Update is called once per frame
@@ -29,6 +30,10 @@ public class QuestManager : MonoBehaviour
     public int GetQuestTalkIndex(int Id){
         return questId+ questActionIndex;
     }
+    public void CheckQuest(int id,TextMeshProUGUI questName){
+        CheckQuest(id);
+        CheckQuest(questName);
+    }
     public void CheckQuest(int id){
         //npc아이디와 퀘스트와 관련된 npc아이디가 같을때만 퀘스트가 진행됨
         if(id==questList[questId].npcId[questActionIndex]){
@@ -37,9 +42,9 @@ public class QuestManager : MonoBehaviour
         //퀘스트가 끝나면 다음 퀘스트로 변경
         if(questActionIndex==questList[questId].npcId.Length)
             NestQuest();
-        Debug.Log(questList[questId].questName);
     }
-    public void CheckQuest(){
+    public void CheckQuest(TextMeshProUGUI questName){
+        questName.text = questList[questId].questName;
         Debug.Log(questList[questId].questName);
     }
     void NestQuest(){

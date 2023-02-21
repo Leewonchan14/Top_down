@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class GameManager : MonoBehaviour
     public TalkManager talkManager;
     public static GameManager instance;
     public Image portraitImg;
-    public Sprite preSprite;
+    Sprite preSprite;
 
     public bool isAction;
     public int talkIndex;
@@ -22,13 +23,15 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        
+        questManager.CheckQuest(UI.questName);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetButtonDown("Cancel")){
+            UI.menuSet.SetActive(UI.menuSet.activeSelf?false:true);
+        }
     }
     public void Action(GameObject scanObject){
         ObjData objData = scanObject.GetComponent<ObjData>();
@@ -40,6 +43,8 @@ public class GameManager : MonoBehaviour
         public Typing ChatText;
         public Animator ChatPanel;
         public Animator Portrait;
+        public GameObject menuSet;
+        public TextMeshProUGUI questName;
     }
     void Talk(int id, bool isNPC){
         //현재 퀘스트 아이디 가져오기
@@ -62,7 +67,7 @@ public class GameManager : MonoBehaviour
         if(talkStr == null) {
             isAction=false;
             talkIndex=0;
-            questManager.CheckQuest(id);
+            questManager.CheckQuest(id,UI.questName);
             return;
         }
         //NPC라면 NPC초상화를 같이 설정
@@ -81,5 +86,8 @@ public class GameManager : MonoBehaviour
         }
         isAction = true;
         talkIndex++;
+    }
+    public void ExitGame(){
+        Application.Quit();
     }
 }
