@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public TalkManager talkManager;
     public static GameManager instance;
     public Image portraitImg;
+    public Sprite preSprite;
 
     public bool isAction;
     public int talkIndex;
@@ -36,8 +37,9 @@ public class GameManager : MonoBehaviour
     }
     [System.Serializable]
     public class ui{
-        public Text ChatText;
+        public Typing ChatText;
         public Animator ChatPanel;
+        public Animator Portrait;
     }
     void Talk(int id, bool isNPC){
         //현재 퀘스트 아이디 가져오기
@@ -54,12 +56,17 @@ public class GameManager : MonoBehaviour
         }
         //NPC라면 NPC초상화를 같이 설정
         if(isNPC){
-            UI.ChatText.text = talkStr.Split(':')[0];
+            UI.ChatText.GetComponent<Typing>().SetMsg(talkStr.Split(':')[0]);
             portraitImg.color = new Color(1,1,1,1);
             portraitImg.sprite = talkManager.GetSprite(id,int.Parse(talkStr.Split(':')[1]));
+            if(preSprite != portraitImg.sprite){
+                UI.Portrait.SetTrigger("isChange");
+                preSprite = portraitImg.sprite;
+            }
+            
         } //NPC가 아니라면 ( 사물 )
         else{
-            UI.ChatText.text = talkStr;
+            UI.ChatText.SetMsg(talkStr);
             portraitImg.color = new Color(1,1,1,0);
         }
         isAction = true;
